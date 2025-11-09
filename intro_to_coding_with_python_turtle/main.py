@@ -2,9 +2,9 @@ from turtle import *
 
 
 # create a square
-def square(square_size: int = 100):
+def square(pixels: int = 50):
     for _ in range(4):
-        forward(square_size)
+        forward(pixels)
         right(90)
 
 
@@ -15,12 +15,22 @@ def create_circle(radius: float = 50, ccolor: str = ""):
     end_fill()
 
 
-if __name__ == "__main__":
+# create a triangle
+def triangle(pixels: float = 50):
+    for _ in range(3):
+        forward(pixels)
+        left(120)
+
+
+def flower():
     for i in range(4):
         create_circle(60, "pink")
         create_circle(40, "violet")
         create_circle(20, "purple")
-
         right(90)
+
+
+if __name__ == "__main__":
+    triangle(100)
 
     done()
