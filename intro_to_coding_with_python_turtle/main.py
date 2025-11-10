@@ -1,4 +1,15 @@
-from turtle import *
+from turtle import (
+    begin_fill,
+    circle,
+    color,
+    done,
+    end_fill,
+    forward,
+    left,
+    pendown,
+    penup,
+    right,
+)
 
 
 # create a square
@@ -30,7 +41,35 @@ def flower():
         right(90)
 
 
+def house(walls: int = 50, roof: int = 70):
+    color("yellow")
+    begin_fill()
+    square(walls)
+    end_fill()
+
+    penup()
+    diff = abs(walls - roof) / 2
+    if roof > walls:
+        forward(-diff)
+    elif walls > roof:
+        forward(diff)
+    pendown()
+
+    color("red")
+    begin_fill()
+    triangle(roof)
+    end_fill()
+
+
 if __name__ == "__main__":
-    triangle(100)
+    # triangle(100)
+
+    # circle(50)
+    # penup()
+    # forward(150)
+    # pendown()
+    # circle(50)
+
+    house(walls=100, roof=170)
 
     done()
