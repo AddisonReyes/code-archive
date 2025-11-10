@@ -1,5 +1,6 @@
 from turtle import (
     begin_fill,
+    bgcolor,
     circle,
     color,
     done,
@@ -61,6 +62,29 @@ def house(walls: int = 50, roof: int = 70):
     end_fill()
 
 
+def solar_system():
+    planets: list[tuple] = [
+        (60, "orange"),
+        (20, "grey"),
+        (40, "red"),
+        (30, "green"),
+        (40, "blue"),
+    ]
+
+    offset = [p[0] for p in planets]
+    margin = max(offset)
+
+    penup()
+    forward(-sum(offset))
+    pendown()
+
+    for planet in planets:
+        create_circle(planet[0], planet[1])
+        penup()
+        forward(margin + 25)
+        pendown()
+
+
 if __name__ == "__main__":
     # triangle(100)
 
@@ -70,6 +94,9 @@ if __name__ == "__main__":
     # pendown()
     # circle(50)
 
-    house(walls=100, roof=170)
+    # house(walls=100, roof=170)
+
+    bgcolor("black")
+    solar_system()
 
     done()
