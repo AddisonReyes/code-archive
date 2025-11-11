@@ -37,7 +37,7 @@ def random_shi():
 if __name__ == "__main__":
     for i in range(1000):
         if i % 2 == 0:
-            move_and_turn(i * 0.6, 6)
+            move_and_turn(-6, -i * 0.6)
         else:
             move_and_turn(6, i * 0.6)
         write(i)
