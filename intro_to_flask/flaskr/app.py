@@ -1,12 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms import BooleanField, StringField, SubmitField, TextAreaField
+from wtforms.validators import InputRequired, Length
+
+# print(os.urandom(24).hex())
+SECRET_KEY = "e77ef067f5a4882c4821cec3cafc7001adc249327406890e"
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SECRET_KEY"] = "e77ef067f5a4882c4821cec3cafc7001adc249327406890e"
+app.config["SECRET_KEY"] = SECRET_KEY
 db = SQLAlchemy(app)
-migrate = Migrate(app)
+migrate = Migrate(app, db)
 
 
 class Task(db.Model):
@@ -16,11 +22,44 @@ class Task(db.Model):
     is_complete = db.Column(db.Boolean, nullable=False)
 
 
+class TaskForm(FlaskForm):
+    title = StringField(
+        "Title",
+        validators=[InputRequired(), Length(min=1, max=100)],
+    )
+    description = TextAreaField(
+        "Description",
+        validators=[Length(max=200)],
+    )
+    is_complete = BooleanField("Is Complete")
+    submit = SubmitField("Submit")
+
+
 @app.cli.command("init-db")
 def init_db():
     db.create_all()
-    migrate
     print("Initialized the database.")
+
+
+@app.route("/task", methods=["GET", "POST"])
+def task():
+    form = TaskForm()
+    if form.validate_on_submit():
+        new_task = Task(
+            title=form.title.data,
+            description=form.description.data,
+            is_complete=form.is_complete.data,
+        )
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for("display_tasks"))
+    return render_template("task.html", form=form)
+
+
+@app.route("/task/list/")
+def display_tasks():
+    tasks = Task.query.all()
+    return render_template("task_list.html", tasks=tasks)
 
 
 @app.route("/")
