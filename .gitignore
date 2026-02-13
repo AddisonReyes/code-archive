@@ -224,3 +224,4 @@ Thumbs.db
 # Archivos temporales
 *.tmp
 *.swp
+/intro_nextjs/.next
