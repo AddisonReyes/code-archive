@@ -13,9 +13,11 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^25.2.3"
+    "@types/node": "^25.2.3",
+    "ejs": "^4.0.1"
   },
   "dependencies": {
+    "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/mongoose": "^5.11.96",
     "express": "^5.2.1",
