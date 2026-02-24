@@ -12,12 +12,12 @@
         <li>
           <strong>Title:</strong> {{ task.title }} <br />
           <strong>Description:</strong>{{ task.description }} <br />
-          <form action="{{ url_for('task_update', task_id=task.id) }}" method="post">
-            <input type="submit" name="is_complete" value="1" {% if task.is_complete %}checked{% endif %} onchange="this.form.submit()" />
+          <form action="{{ url_for('update_task_status', task_id=task.id) }}" method="POST">
+            <input type="checkbox" name="is_complete" {% if task.is_complete %}checked{% endif %} onchange="this.form.submit()" />
             <strong>Is complete:</strong> {{ task.is_complete }} <br />
           </form>
         </li>
-        {% else %}
+      {% else %}
         <li>No tasks</li>
       {% endfor %}
     </ul>
