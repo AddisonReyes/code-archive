@@ -21,6 +21,13 @@
           <span style="color: red;">{{ error }}</span>
         {% endfor %}
       </p>
+      <p>
+        {{ form.priority.label }} <br />
+        {{ form.priority() }} <br />
+        {% for error in form.priority.errors %}
+          <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
       <p>{{ form.is_complete() }}{{ form.is_complete.label }}</p>
       <p>{{ form.submit() }}</p>
     </form>

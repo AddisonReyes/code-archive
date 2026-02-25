@@ -12,6 +12,7 @@ def task():
             title=form.title.data,
             description=form.description.data,
             is_complete=form.is_complete.data,
+            priority=form.priority.data,
         )
         db.session.add(new_task)
         db.session.commit()
@@ -21,7 +22,7 @@ def task():
 
 @app.route("/task/list/")
 def display_tasks():
-    tasks = Task.query.all()
+    tasks = Task.query.order_by(Task.priority.desc()).all()
     return render_template("task_list.html", tasks=tasks)
 
 
@@ -30,6 +31,15 @@ def update_task_status(task_id):
     task = Task.query.get_or_404(task_id)
     if task:
         task.is_complete = not task.is_complete
+        db.session.commit()
+    return redirect(url_for("display_tasks"))
+
+
+@app.route("/task/delete/<int:task_id>", methods=["POST"])
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    if task:
+        db.session.delete(task)
         db.session.commit()
     return redirect(url_for("display_tasks"))
 
