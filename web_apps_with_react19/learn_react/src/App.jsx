@@ -1,69 +1,57 @@
-import { useState, CreateElement } from "react";
+import { useState } from "react";
 
-import Students from "./Studdents";
+import ProfileCard from "./ProfileCard";
+import Students from "./Students";
 import Message from "./Message";
 import Header from "./Header";
+import Login from "./login";
+import State from "./State";
 
 const title = "Welcome to React!";
 
 function App() {
-  const [notificationCount, setNotificationCount] = useState(0);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const name = "Addison";
+  const [isOnline, setIsOnline] = useState(true);
+  const [name, setName] = useState("");
 
-  const formatMessage = (name) => {
-    return `Hello, ${name}!`;
-  };
-
-  const headingStyle = {
-    color: "teal",
-    fontSize: "28px",
-    textAlign: "center",
-    margin: "20px 0",
+  const handleInputChange = (event) => {
+    setName(event.target.value);
   };
 
   return (
     <div>
-      <Header />
       <h1>{title}</h1>
-      <Message text="This is a message component." />
-      <Message text="This is another message component." />
+      <div>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          value={name}
+          onChange={handleInputChange}
+        />
+        {name && <p>Hello, {name}!</p>}
+      </div>
 
-      <Students />
+      {name && <Login name={name} loggedIn={false} />}
 
-      {/* Using a JavaScript variable */}
-      <p>Me: {name}</p>
+      <br />
+      <hr />
+      <br />
 
-      {/* Using a function  */}
-      <p>{formatMessage(name)}</p>
+      <p>Is Online: {isOnline ? "Yes" : "No"}</p>
+      <button onClick={() => setIsOnline((prevStatus) => !prevStatus)}>
+        Toggle Online Status
+      </button>
+      <ProfileCard
+        name="Addison"
+        role="Software Engineer"
+        isOnline={isOnline}
+      />
+      <ProfileCard name="Daniel" role="React Developer" isOnline={isOnline} />
 
-      {/* Inline styles */}
-      <h2 style={headingStyle}>Inline Styles</h2>
-
-      {/* Conditional rendering */}
-      {isLoggedIn ? (
-        <div>
-          <p>Welcome back, {name}!</p>
-          <button onClick={() => setIsLoggedIn(false)}>log out</button>
-        </div>
-      ) : (
-        <div>
-          <p>
-            Please <button onClick={() => setIsLoggedIn(true)}>log in</button>{" "}
-            to see your messages. ({notificationCount} new messages)
-          </p>
-          <button onClick={() => setNotificationCount(notificationCount + 1)}>
-            Refresh Messages
-          </button>
-        </div>
-      )}
-
-      {isLoggedIn && (
-        <div>
-          <p>You have {notificationCount} new messages.</p>
-          <button onClick={() => setNotificationCount(0)}>Mark as read</button>
-        </div>
-      )}
+      {/* <Header /> */}
+      {/* <Message text="This is a message component." /> */}
+      {/* <Message text="This is another message component." /> */}
+      {/* <Students /> */}
+      {/* <State /> */}
     </div>
   );
 }
