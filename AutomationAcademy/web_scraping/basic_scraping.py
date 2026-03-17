@@ -4,21 +4,25 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 
-html_doc = """
-<html><head><title>The Dormouse's story</title></head>
-<body>
-<p class="title"><b>The Dormouse's story</b></p>
+# ----------------------------------------------------------
+# ----------------- BeautifullSoup lib ---------------------
+# ----------------------------------------------------------
 
-<p class="story">Once upon a time there were three little sisters; and their names were
-<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
-<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
-<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
-and they lived at the bottom of a well.</p>
+# html_doc = """
+# <html><head><title>The Dormouse's story</title></head>
+# <body>
+# <p class="title"><b>The Dormouse's story</b></p>
 
-<p class="story">...</p>
-"""
+# <p class="story">Once upon a time there were three little sisters; and their names were
+# <a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+# <a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+# <a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+# and they lived at the bottom of a well.</p>
 
-soup = BeautifulSoup(html_doc, "html.parser")
+# <p class="story">...</p>
+# """
+
+# soup = BeautifulSoup(html_doc, "html.parser")
 
 # print(soup.prettify())
 # print(soup.title, "\n")
@@ -55,10 +59,30 @@ soup = BeautifulSoup(html_doc, "html.parser")
 
 # for p in soup.a.parents: print(p)
 
-a = soup.a
-print(a)
-print(a.next_sibling.next_sibling)
-print(a.next_sibling.next_sibling.next_sibling.next_sibling)
+# a = soup.a
+# print(a)
+# print(a.next_sibling.next_sibling)
+# print(a.next_sibling.next_sibling.next_sibling.next_sibling)
 
-# response = requests.get("https://beautiful-soup-4.readthedocs.io/en/latest/")
-# print(response.text)
+
+# ----------------------------------------------------------
+# -------------------- Requests lib ------------------------
+# ----------------------------------------------------------
+
+url = "https://requests.readthedocs.io/en/latest/"
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, "html.parser")
+# print(soup.prettify())
+
+h1 = soup.find("h1")
+print("h1: ", h1, "\n")
+
+h2 = soup.find_all("h2")
+print("h2:")
+for h in h2:
+    print(h)
+print("\n")
+
+href = soup.a["href"]
+print("href: ", href)
