@@ -69,17 +69,17 @@ from bs4 import BeautifulSoup
 # -------------------- Requests lib ------------------------
 # ----------------------------------------------------------
 
-url = "https://requests.readthedocs.io/en/latest/"
+url = "https://grokipedia.com/page/Web_scraping"
 response = requests.get(url)
 
 soup = BeautifulSoup(response.text, "html.parser")
 # print(soup.prettify())
 
 h1 = soup.find("h1")
-print("h1: ", h1, "\n")
+print("h1: ", h1.text, "\n")
 
 h2 = soup.find_all("h2")
-print("h2:")
+print("h2 ->", len(h2))
 for h in h2:
     print(h)
 print("\n")
