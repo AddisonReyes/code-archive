@@ -34,8 +34,31 @@ soup = BeautifulSoup(html_doc, "html.parser")
 # a_tags: List[str] = soup.find_all("a")
 # pprint.pprint(a_tags)
 
-a_tags: List[str] = soup.find_all(["a", "title"])
-pprint.pprint(a_tags)
+# tags: List[str] = soup.find_all(["a", "title"])
+# pprint.pprint(tags)
+
+# p = soup.find(class_="story")
+# pprint.pprint(p.contents)
+# for child in p.children: print(child)
+
+# body = soup.find("body")
+# print(body.contents)
+# print(len(body.contents))
+
+# body = soup.find("body")
+# body_tags = [tag for tag in body.contents if tag != "\n"]
+# pprint.pprint(list(body_tags))
+# print(len(list(body_tags)))
+
+# p = soup.a.parent
+# print(p)
+
+# for p in soup.a.parents: print(p)
+
+a = soup.a
+print(a)
+print(a.next_sibling.next_sibling)
+print(a.next_sibling.next_sibling.next_sibling.next_sibling)
 
 # response = requests.get("https://beautiful-soup-4.readthedocs.io/en/latest/")
 # print(response.text)
