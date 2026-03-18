@@ -12,11 +12,11 @@ gcc <file>.c -o <file> -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 - [x] Install a C/C++ compiler (GCC, Clang, or MSVC)
 - [x] Download and install raylib from [raylib.com](https://www.raylib.com/) or via a package manager
-- [ ] Set up your IDE or editor (VS Code, CLion, or Neovim)
-- [ ] Configure a build system (Makefile, CMake, or use the raylib template project)
-- [ ] Compile and run the `core_basic_window` example from raylib
-- [ ] Read the [raylib cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html)
-- [ ] Understand the basic game loop structure (`InitWindow`, `WindowShouldClose`, `BeginDrawing`, `EndDrawing`, `CloseWindow`)
+- [X] Set up your IDE or editor (VS Code, CLion, or Neovim)
+- [X] Configure a build system (Makefile, CMake, or use the raylib template project)
+- [X] Compile and run the `core_basic_window` example from raylib
+- [X] Read the [raylib cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html)
+- [X] Understand the basic game loop structure (`InitWindow`, `WindowShouldClose`, `BeginDrawing`, `EndDrawing`, `CloseWindow`)
 
 ---
 
