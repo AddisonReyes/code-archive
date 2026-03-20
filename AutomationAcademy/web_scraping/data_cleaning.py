@@ -25,9 +25,11 @@ def main() -> None:
         html = f.read()
 
     soup = BeautifulSoup(html, "html.parser")
-    # print(soup.title)
 
-    pprint.pprint(soup.find_all("h2"))
+    section_headings = soup.find_all("h2")
+    section_headings = [span.string for span in section_headings]
+    print(section_headings)
+    print(type(section_headings[0]))
 
 
 if __name__ == "__main__":
