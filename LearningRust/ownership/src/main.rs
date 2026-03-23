@@ -1,3 +1,16 @@
+fn print_greetings(name: String) -> String {
+    println!("Welcome {name}");
+    return name;
+}
+
+fn printr_greetings(name: &String) {
+    println!("Welcome {name}");
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+
 fn main() {
     // Example #1
     let s1 = String::from("Hello"); // s1 is the owner of Hello
@@ -21,13 +34,22 @@ fn main() {
     let my_name = String::from("Addison");
     printr_greetings(&my_name);
     println!("{my_name}");
-}
 
-fn print_greetings(name: String) -> String {
-    println!("Welcome {name}");
-    return name;
-}
+    // Slice Type
+    let message = String::from("Hello world");
+    let hello = &message[0..5];
+    println!("{hello}");
 
-fn printr_greetings(name: &String) {
-    println!("Welcome {name}");
+    let array = [1, 2, 3, 4, 5, 6];
+    let slice = &array[1..3];
+
+    for num in slice {
+        println!("{}", num);
+    }
+
+    // Quiz code
+    let str1 = String::from("hello");
+    let len = calculate_length(&str1);
+    println!("The length of '{}' is {}", str1, len);
+    println!("{:?}", slice); // [2, 3, 4]
 }
