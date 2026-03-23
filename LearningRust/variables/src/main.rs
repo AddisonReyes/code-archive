@@ -35,4 +35,13 @@ fn main() {
     
     // const PI: f32 = 6.28; <-- Error
 
+    // Strings
+    let mut name = String::from("Zenva"); 
+    // let mut name = "Zenva"; <-- This is a String Slices (&str) no a String
+    name.push_str(" Academy"); 
+    println!("{}", name); 
+
+    // Use &str when you have a string literal or when you do not need to own the data.
+    // Use String when you require a string that you can modify or if you need ownership of the data.
+
 }
