@@ -6,6 +6,23 @@ struct User {
     date_of_birth: String,
 }
 
+// Methods
+
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        return self.width * self.height;
+    }
+
+    fn print_dimensions(&self) {
+        println!("Height {}, width {}", self.height, self.width);
+    }
+}
+
 fn print_user_message(user: &User) {
     println!(
         "Name: {}, Email: {}, Active: {}, Sign-in Count: {}, Date of birth: {}",
@@ -38,4 +55,13 @@ fn main() {
 
     print_user_message(&user1);
     print_user_message(&user2);
+
+    let rect1 = Rectangle {
+        width: 25,
+        height: 20,
+    };
+
+    let rect1_area = rect1.area();
+    println!("Rectangle #1 area = {}", rect1_area);
+    rect1.print_dimensions();
 }
