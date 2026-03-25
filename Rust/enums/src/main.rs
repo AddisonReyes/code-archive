@@ -1,3 +1,5 @@
+use std::result;
+
 enum TrafficLight {
     Red,
     Yellow,
@@ -21,6 +23,14 @@ fn calculate_area(shape: Shape) {
     }
 }
 
+fn safe_divide(numerator: f64, denominator: f64) -> Option<f64> {
+    if denominator == 0.0 {
+        None
+    } else {
+        Some(numerator / denominator)
+    }
+}
+
 fn main() {
     let light = TrafficLight::Red;
 
@@ -38,4 +48,18 @@ fn main() {
     calculate_area(rectangle);
     calculate_area(circle);
     calculate_area(square);
+
+    // Option Enum: eg.: Safe division
+    let result = safe_divide(1000.0, 10.0);
+    match result {
+        Some(value) => println!("Succesful division: {}", value),
+        None => println!("Cannot divide by zero"),
+    }
+
+    // If LET Statement
+    if let TrafficLight::Red = light {
+        println!("You must no pass");
+    } else if let TrafficLight::Yellow = light {
+        println!("You must no pass");
+    }
 }
