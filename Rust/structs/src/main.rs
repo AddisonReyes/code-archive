@@ -64,4 +64,11 @@ fn main() {
     let rect1_area = rect1.area();
     println!("Rectangle #1 area = {}", rect1_area);
     rect1.print_dimensions();
+
+    // Basic Usage of format!()
+
+    let name = "Jane";
+    let age = 30;
+    let introduction = format!("Hi, my name is {} and I am {} years old.", name, age);
+    println!("{}", introduction);
 }
