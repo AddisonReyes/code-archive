@@ -1,5 +1,3 @@
-use core::num;
-
 fn main() {
     // Vec<T>
     // Heap-allocated
