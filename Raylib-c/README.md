@@ -12,33 +12,32 @@ gcc <file>.c -o <file> -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 - [x] Install a C/C++ compiler (GCC, Clang, or MSVC)
 - [x] Download and install raylib from [raylib.com](https://www.raylib.com/) or via a package manager
-- [X] Set up your IDE or editor (VS Code, CLion, or Neovim)
-- [X] Configure a build system (Makefile, CMake, or use the raylib template project)
-- [X] Compile and run the `core_basic_window` example from raylib
-- [X] Read the [raylib cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html)
-- [X] Understand the basic game loop structure (`InitWindow`, `WindowShouldClose`, `BeginDrawing`, `EndDrawing`, `CloseWindow`)
+- [x] Set up your IDE or editor (VS Code, CLion, or Neovim)
+- [x] Configure a build system (Makefile, CMake, or use the raylib template project)
+- [x] Compile and run the `core_basic_window` example from raylib
+- [x] Read the [raylib cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html)
+- [x] Understand the basic game loop structure (`InitWindow`, `WindowShouldClose`, `BeginDrawing`, `EndDrawing`, `CloseWindow`)
 
 ---
 
 ## 🖼️ Stage 2: 2D Graphics Basics
 
-- [ ] Draw basic shapes: rectangles, circles, lines, triangles
-- [ ] Understand screen coordinates and the 2D coordinate system
-- [ ] Load and display a texture/image with `LoadTexture` and `DrawTexture`
-- [ ] Draw text on screen with `DrawText` and `DrawTextEx`
-- [ ] Work with colors (`Color` struct, built-in color constants)
-- [ ] Implement a simple bouncing ball simulation
-- [ ] Understand `ClearBackground` and the rendering pipeline
+- [x] Draw basic shapes: rectangles, circles, lines, triangles
+- [x] Understand screen coordinates and the 2D coordinate system
+- [x] Load and display a texture/image with `LoadTexture` and `DrawTexture`
+- [x] Draw text on screen with `DrawText` and `DrawTextEx`
+- [x] Work with colors (`Color` struct, built-in color constants)
+- [x] Implement a simple bouncing ball simulation
+- [x] Understand `ClearBackground` and the rendering pipeline
 
 ---
 
 ## ⌨️ Stage 3: Input Handling
 
-- [ ] Detect keyboard input with `IsKeyDown`, `IsKeyPressed`, `IsKeyReleased`
-- [ ] Handle mouse input: position, buttons, and scroll wheel
-- [ ] Move a sprite/shape using keyboard input
-- [ ] Implement gamepad/controller input with `IsGamepadAvailable`
-- [ ] Build a small demo: control a character with WASD or arrow keys
+- [x] Detect keyboard input with `IsKeyDown`, `IsKeyPressed`, `IsKeyReleased`
+- [x] Handle mouse input: position, buttons, and scroll wheel
+- [x] Move a sprite/shape using keyboard input
+- [x] Build a small demo: control a character with WASD or arrow keys
 
 ---
 
