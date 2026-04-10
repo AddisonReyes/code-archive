@@ -2,8 +2,10 @@ import Router from "express";
 
 const router = Router();
 
-router.get("/", (req, res, next) => {
-  res.render("home", null);
+router.post("/", (req, res, next) => {
+  res.json({
+    data: req.body,
+  });
 });
 
 export default router;
