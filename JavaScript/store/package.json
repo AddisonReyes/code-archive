@@ -7,11 +7,14 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "dev": "npx nodemon"
+    "dev": "npx nodemon",
+    "start": "node src/server.js"
   },
   "dependencies": {
+    "dotenv": "^17.4.1",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
+    "mongoose": "^9.4.1",
     "nodemon": "^3.1.14"
   }
 }
