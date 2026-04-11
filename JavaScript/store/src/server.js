@@ -1,8 +1,12 @@
+import session from "express-session";
+import passport from "passport";
 import mongoose from "mongoose";
 import express from "express";
 import "dotenv/config";
 
+import auth from "./config/auth.js";
 import homeRoute from "./routes/home.js";
+import accountRoute from "./routes/account.js";
 import registerRoute from "./routes/register.js";
 import loginRoute from "./routes/login.js";
 
@@ -17,6 +21,17 @@ mongoose
 
 const app = express();
 
+auth(passport);
+app.use(
+  session({
+    secret: "kjhqwevbnaet",
+    saveUninitialized: true,
+    resave: true,
+  }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.set("views", "views");
 app.set("view engine", "ejs");
 
@@ -27,9 +42,9 @@ app.use(express.static("public"));
 app.use("/", homeRoute);
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
+app.use("/account", accountRoute);
 
 app.use((err, req, res, next) => {
-  console.log(err);
   res.render("error", { message: err });
 });
 
