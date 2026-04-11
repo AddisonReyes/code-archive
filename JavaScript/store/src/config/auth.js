@@ -1,4 +1,6 @@
 import LocalStrategy from "passport-local";
+import bcrypt from "bcrypt";
+
 import User from "../models/user.js";
 
 const env = process.env.NODE_ENV || "prod";
@@ -36,7 +38,7 @@ function auth(passport) {
         return;
       }
 
-      if (user.password !== password) {
+      if (bcrypt.compareSync(password, user.password) == false) {
         next("Incorrect Password");
         return;
       }
@@ -65,9 +67,10 @@ function auth(passport) {
         return;
       }
 
+      password = bcrypt.hashSync(password, 10);
       const newUser = new User({
-        email: req.body.email,
-        password: req.body.password,
+        email: email,
+        password: password,
       });
 
       await newUser.save();
