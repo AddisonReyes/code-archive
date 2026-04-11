@@ -4,6 +4,7 @@ import "dotenv/config";
 
 import homeRoute from "./routes/home.js";
 import registerRoute from "./routes/register.js";
+import loginRoute from "./routes/login.js";
 
 const mongo_url = process.env.MONGO_URL;
 const port = process.env.BACKEND_PORT || 3000;
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/", homeRoute);
 app.use("/register", registerRoute);
+app.use("/login", loginRoute);
 
 app.listen(port, () => {
   if (env === "dev") {
