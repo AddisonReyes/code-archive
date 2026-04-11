@@ -11,7 +11,8 @@ router.post("/", async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(400).send({ error: "This user doesn\'t exists" });
+      // res.status(400).send({ error: "This user doesn\'t exists" });
+      next("This user doesn\'t exists");
     }
 
     const password = req.body.password;
@@ -24,10 +25,12 @@ router.post("/", async (req, res, next) => {
 
       res.status(200).send({ message: "Ok" });
     } else {
-      res.status(400).send({ error: "Incorrect Password" });
+      // res.status(400).send({ error: "Incorrect Password" });
+      next("Incorrect Password");
     }
   } catch (error) {
-    res.status(400).send(error);
+    // res.status(400).send(error);
+    next(error);
   }
 });
 

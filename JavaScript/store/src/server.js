@@ -28,6 +28,11 @@ app.use("/", homeRoute);
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.render("error", { message: err });
+});
+
 app.listen(port, () => {
   if (env === "dev") {
     console.log(` - - Server on \'DEBUG\' mode - - `);
