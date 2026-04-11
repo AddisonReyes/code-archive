@@ -51,6 +51,38 @@ function auth(passport) {
     },
   );
 
+  const localRegister = new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, email, password, next) => {
+      const user = await User.findOne({ email });
+
+      if (user !== null) {
+        next("This user already exists, please log in.");
+        return;
+      }
+
+      const newUser = new User({
+        email: req.body.email,
+        password: req.body.password,
+      });
+
+      await newUser.save();
+
+      if (env === "dev") {
+        console.log(
+          `${req.baseUrl} - ${req.method} :: User registered - ${email}`,
+        );
+      }
+
+      next(null, newUser);
+    },
+  );
+
+  passport.use("localRegister", localRegister);
   passport.use("localLogin", localLogin);
 }
 
