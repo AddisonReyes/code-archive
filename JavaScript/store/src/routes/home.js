@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
     console.log(`${req.baseUrl || "/"} - ${req.method} :: Home view`);
   }
 
-  res.render("home", null);
+  res.render("home", { title: "Home" });
 });
 
 export default router;

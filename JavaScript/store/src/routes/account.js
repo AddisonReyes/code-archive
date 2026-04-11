@@ -8,9 +8,13 @@ router.get("/", (req, res, next) => {
     console.log(`${req.baseUrl || "/"} - ${req.method} :: Account view`);
   }
 
-  res.send({
-    user: req.user || "Not logged in",
-  });
+  const { user } = req;
+  if (!user) {
+    res.redirect("/");
+    return;
+  }
+
+  res.render("account", { title: "Account", user });
 });
 
 router.get("/logout", (req, res, next) => {
@@ -18,11 +22,7 @@ router.get("/logout", (req, res, next) => {
     console.log(`${req.baseUrl || "/"} - ${req.method} :: logged out`);
   }
 
-  req.logout(() => {
-    res.send({
-      message: "User logged out",
-    });
-  });
+  res.redirect("/");
 });
 
 export default router;
