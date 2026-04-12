@@ -10,6 +10,7 @@ import homeRoute from "./routes/home.js";
 import accountRoute from "./routes/account.js";
 import registerRoute from "./routes/register.js";
 import loginRoute from "./routes/login.js";
+import adminRoute from "./routes/admin.js";
 
 const mongo_url = process.env.MONGO_URL;
 const port = process.env.BACKEND_PORT || 3000;
@@ -51,6 +52,7 @@ app.use("/", homeRoute);
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 app.use("/account", accountRoute);
+app.use("/admin", adminRoute);
 
 app.use((err, req, res, next) => {
   const message =

@@ -68,9 +68,16 @@ function auth(passport) {
       }
 
       password = bcrypt.hashSync(password, 10);
+      let isAdmin = false;
+
+      if (email.indexOf("@admin.com") != -1) {
+        isAdmin = true;
+      }
+
       const newUser = new User({
-        email: email,
-        password: password,
+        email,
+        password,
+        isAdmin,
       });
 
       await newUser.save();
