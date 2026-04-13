@@ -17,6 +17,14 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  nonce: {
+    type: String,
+    default: null,
+  },
+  passwordResetTime: {
+    default: null,
+    type: Date,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);

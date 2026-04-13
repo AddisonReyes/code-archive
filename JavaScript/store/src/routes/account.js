@@ -1,26 +1,29 @@
+import emailjs from "@emailjs/nodejs";
 import Router from "express";
 
 import Item from "../models/item.js";
+import User from "../models/user.js";
 
 const env = process.env.NODE_ENV || "prod";
 const router = Router();
 
-router.get("/", async (req, res, next) => {
-  if (env === "dev") {
-    console.log(`${req.baseUrl || "/"} - ${req.method} :: Account view`);
+const emailjsPrivateKey = process.env.EMAILJS_PRIVATE_KEY;
+const emailjsPublicKey = process.env.EMAILJS_PUBLIC_KEY;
+const emailjsServiceId = process.env.EMAILJS_SERVICE_ID;
+const emailjsTemplateId = process.env.EMAILJS_TEMPLATE_ID;
+
+function randomString(length) {
+  let text = "";
+  const possibleChars =
+    "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890";
+  for (let i = 0; i < length; i++) {
+    text += possibleChars.charAt(
+      Math.floor(Math.random() * possibleChars.length),
+    );
   }
 
-  const { user } = req;
-  if (!user) {
-    res.redirect("/");
-    return;
-  }
-
-  const interestedItems = await Item.find({ interested: user._id });
-  const items = await Item.find({});
-
-  res.render("account", { title: "Account", interestedItems, items, user });
-});
+  return text;
+}
 
 router.get("/add-item/:id", async (req, res, next) => {
   const { user } = req;
@@ -71,6 +74,46 @@ router.get("/logout", (req, res, next) => {
   }
 
   res.redirect("/");
+});
+
+router.post("/reset-password", async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user === null) {
+    next("This user doesn\'t exists");
+    return;
+  }
+
+  user.nonce = randomString(8);
+  user.passwordResetTime = new Date();
+
+  const templateParams = { email };
+  emailjs
+    .send(emailjsServiceId, emailjsTemplateId, templateParams, {
+      publicKey: emailjsPublicKey,
+      privateKey: emailjsPrivateKey,
+    })
+    .then(
+      (response) => {
+        if (env === "dev") {
+          console.log(
+            `${req.baseUrl || "/"} - ${req.method} :: Sending email...`,
+          );
+          console.log("SUCCESS!", response.status, response.text);
+        }
+      },
+      (err) => {
+        if (env === "dev") {
+          console.log(
+            `${req.baseUrl || "/"} - ${req.method} :: Sending email...`,
+          );
+          console.log("FAILED...", err);
+        }
+      },
+    );
+
+  await user.save();
 });
 
 export default router;
