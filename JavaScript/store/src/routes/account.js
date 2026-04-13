@@ -16,8 +16,10 @@ router.get("/", async (req, res, next) => {
     return;
   }
 
+  const interestedItems = await Item.find({ interested: user._id });
   const items = await Item.find({});
-  res.render("account", { title: "Account", items, user });
+
+  res.render("account", { title: "Account", interestedItems, items, user });
 });
 
 router.get("/add-item/:id", async (req, res, next) => {
@@ -27,23 +29,40 @@ router.get("/add-item/:id", async (req, res, next) => {
     return;
   }
 
-  if (env === "dev") {
-    console.log(`${req.baseUrl || "/"} - ${req.method} :: Adding item...`);
-  }
-
   const item = await Item.findById(req.params.id);
   if (item.interested.indexOf(user._id) === -1) {
     item.interested.push(user._id);
     await item.save();
   }
   if (env === "dev") {
-    console.log(`${req.baseUrl || "/"} - ${req.method} :: Item added `);
+    console.log(
+      `${req.baseUrl || "/"} - ${req.method} :: Item \'${item.name}\' added `,
+    );
   }
 
-  res.json({
-    item,
-    user,
-  });
+  res.redirect("/account");
+});
+
+router.get("/remove-item/:id", async (req, res, next) => {
+  const { user } = req;
+  if (!user) {
+    res.redirect("/");
+    return;
+  }
+
+  const item = await Item.findById(req.params.id);
+  const index = item.interested.indexOf(user._id);
+  if (index !== -1) {
+    item.interested.splice(index, 1);
+    await item.save();
+  }
+  if (env === "dev") {
+    console.log(
+      `${req.baseUrl || "/"} - ${req.method} :: Item \'${item.name}\' removed `,
+    );
+  }
+
+  res.redirect("/account");
 });
 
 router.get("/logout", (req, res, next) => {

@@ -20,5 +20,19 @@
   </div>
   <div class="col-4">
     <h3>My items</h3>
+    <ol>
+      <% interestedItems.forEach((item) => { %>
+      <li>
+        <div class="item">
+          <%= item.name %><br />
+          <%= item.description %><br />
+          <%= item.price %><br />
+          <a class="btn btn-danger" href="/account/remove-item/<%= item.id %>">
+            Remove
+          </a>
+        </div>
+      </li>
+      <% }); %>
+    </ol>
   </div>
 </div>
