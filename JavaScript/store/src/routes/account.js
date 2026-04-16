@@ -1,5 +1,6 @@
 import emailjs from "@emailjs/nodejs";
 import Router from "express";
+import bcrypt from "bcrypt";
 
 import Item from "../models/item.js";
 import User from "../models/user.js";
@@ -25,6 +26,23 @@ function randomString(length) {
 
   return text;
 }
+
+router.get("/", async (req, res, next) => {
+  if (env === "dev") {
+    console.log(`${req.baseUrl || "/"} - ${req.method} :: Account view`);
+  }
+
+  const { user } = req;
+  if (!user) {
+    res.redirect("/");
+    return;
+  }
+
+  const interestedItems = await Item.find({ interested: user._id });
+  const items = await Item.find({});
+
+  res.render("account", { title: "Account", interestedItems, items, user });
+});
 
 router.get("/add-item/:id", async (req, res, next) => {
   const { user } = req;
@@ -155,7 +173,52 @@ router.get("/password-reset", async (req, res, next) => {
     return;
   }
 
-  res.json({ nonce, id, diff: seconds });
+  const data = { title: "Reset password", id, nonce };
+  res.render("password", data);
+});
+
+router.post("/new-password", async (req, res, next) => {
+  const { password1, password2, nonce, id } = req.body;
+
+  console.log(password1, password2, nonce, id, req.body.id);
+
+  if (password1 == null || password2 == null || nonce == null || id == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  if (password1 != password2) {
+    next("Password do not match");
+    return;
+  }
+
+  const user = await User.findById(id);
+  if (user == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  if (user.passwordResetTime == null || user.nonce == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  if (user.nonce != nonce) {
+    next("Invalid Request");
+    return;
+  }
+
+  const password = bcrypt.hashSync(password1, 10);
+  user.password = password;
+  await user.save();
+
+  if (env === "dev") {
+    console.log(
+      `${req.baseUrl} - ${req.method} :: User password changed - ${user.email}`,
+    );
+  }
+
+  res.redirect("/");
 });
 
 export default router;
