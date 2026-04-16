@@ -4,6 +4,7 @@ import Router from "express";
 import Item from "../models/item.js";
 import User from "../models/user.js";
 
+const port = process.env.BACKEND_PORT || 3000;
 const env = process.env.NODE_ENV || "prod";
 const router = Router();
 
@@ -88,7 +89,12 @@ router.post("/reset-password", async (req, res, next) => {
   user.nonce = randomString(8);
   user.passwordResetTime = new Date();
 
-  const templateParams = { email };
+  const link =
+    env === "dev"
+      ? `http:localhost:${port}/account/password-reset?nonce=${user.nonce}&id=${user._id}`
+      : `https:store/account/password-reset?nonce=${user.nonce}&id=${user._id}`;
+  const templateParams = { link, email };
+
   emailjs
     .send(emailjsServiceId, emailjsTemplateId, templateParams, {
       publicKey: emailjsPublicKey,
@@ -114,6 +120,42 @@ router.post("/reset-password", async (req, res, next) => {
     );
 
   await user.save();
+});
+
+router.get("/password-reset", async (req, res, next) => {
+  const { nonce, id } = req.query;
+
+  if (nonce == null || id == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  const user = await User.findById(id);
+  if (user == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  if (user.passwordResetTime == null || user.nonce == null) {
+    next("Invalid Request");
+    return;
+  }
+
+  if (user.nonce != nonce) {
+    next("Invalid Request");
+    return;
+  }
+
+  const now = new Date();
+  const diff = now - user.passwordResetTime;
+  const seconds = diff / 1000;
+
+  if (seconds > 24 * 60 * 60) {
+    next("Invalid Request");
+    return;
+  }
+
+  res.json({ nonce, id, diff: seconds });
 });
 
 export default router;
